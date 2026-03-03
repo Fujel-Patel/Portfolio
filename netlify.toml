@@ -1,0 +1,18 @@
+[build]
+  # The directory where Netlify looks for dependencies and build commands.
+  # We set this to the root (empty) since your package.json is in the root.
+  base = ""
+
+  # The command to run to build your site.
+  command = "npm install && npm run build"
+
+  # The directory that Netlify will serve.
+  # Your vite.config.ts builds to "dist/public".
+  publish = "dist/public"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # This ensures devDependencies are installed if needed, 
+  # though we already moved the critical ones to dependencies.
+  NODE_ENV = "production"
+  NPM_FLAGS = "--include=dev"
