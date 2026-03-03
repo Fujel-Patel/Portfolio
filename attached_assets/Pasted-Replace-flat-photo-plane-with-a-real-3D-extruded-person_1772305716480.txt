@@ -1,0 +1,88 @@
+Replace flat photo plane with a real 3D extruded person object.
+
+=== CONCEPT ===
+Make Fujel look like a 3D standee/statue — like a real physical 
+3D object that has thickness and depth when rotated.
+Exactly like the computer model in shubam.netlify.app but 
+instead of a computer, it's a person shape with real 3D depth.
+
+=== HOW TO BUILD IT ===
+
+Method: Multi-layer depth stack (creates true 3D illusion)
+
+Create 12 planes, each offset slightly on Z axis:
+
+const layers = 12
+for(let i = 0; i < layers; i++) {
+  // Each plane slightly smaller + darker as it goes back
+  zPos = i * -0.04        // depth offset
+  opacity = 1 - (i * 0.08) // front is full opacity
+  scale = 1 - (i * 0.005) // slightly smaller going back
+}
+
+Front plane (i=0): 
+- texture = profile-nobg.png (transparent background PNG)
+- MeshBasicMaterial, transparent: true, map: texture
+- Full opacity
+
+Middle planes (i=1 to 10):
+- Same texture, lower opacity
+- Creates body thickness / extrusion effect
+
+Back plane (i=11):
+- Dark silhouette: MeshBasicMaterial color=#0a0a2e
+- Acts as shadow/back of the 3D figure
+
+Group all 12 planes together as <group>
+
+=== RESULT WHEN ROTATED ===
+- Front view: clear sharp photo of Fujel
+- Side view: shows "thickness" — looks like a 3D person cutout
+- Back: dark silhouette
+- Exactly like rotating a cardboard cutout with volume
+
+=== CONTROLS ===
+OrbitControls:
+- enableZoom: true
+- autoRotate: true, autoRotateSpeed: 1.2
+- Horizontal rotation: unlimited
+- Vertical: limit to -30° to +30° (polarAngle)
+- Stop on mousedown, resume after 2.5s
+- Touch swipe works on mobile
+
+=== LIGHTING ===
+- AmbientLight: 1.0 (since using MeshBasicMaterial, not needed but keep)
+- Add a PointLight cyan #06b6d4 at [2, 3, 4] for edge glow effect
+
+=== GLOW AURA BEHIND PERSON ===
+Add one large plane behind all layers:
+- CircleGeometry(2, 32) or PlaneGeometry(3, 4.5)
+- MeshBasicMaterial: color=#06b6d4, transparent, opacity=0.06
+- position z = -0.6
+- This creates cyan body glow
+
+=== CANVAS ===
+<Canvas
+  gl={{ alpha: true, antialias: true }}
+  style={{ background: 'transparent' }}
+  camera={{ position: [0, 0, 6], fov: 42 }}
+  dpr={Math.min(window.devicePixelRatio, 2)}
+>
+
+Canvas background MUST be transparent so website dark 
+background (#050510) shows through — person floats on page.
+
+=== REMOVE ===
+- Delete old single PlaneGeometry approach
+- No BoxGeometry card
+- No purple/dark rectangle
+- No frames
+
+=== FILE ===
+Update: src/components/Scene/ProfileModel3D.jsx
+Image: src/assets/profile-nobg.png (transparent bg PNG)
+
+=== IMPORTANT ===
+Image MUST be transparent PNG (no background).
+Go to remove.bg first, then run this code.
+Without transparent PNG this will NOT work correctly.

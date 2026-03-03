@@ -1,0 +1,73 @@
+Create a 3D interactive rotating profile using React Three Fiber.
+
+=== GOAL ===
+Make a 3D object featuring Fujel's real photo that users can 
+rotate 360° by mouse drag or touch swipe — exactly like a 3D 
+computer model on shubam.netlify.app
+
+=== 3D OBJECT DESIGN ===
+Build a "3D Floating Photo Frame / Holographic Card":
+
+Structure (using Three.js geometry, NO external 3D model needed):
+- Main panel: BoxGeometry (2.5, 3.5, 0.08) — portrait card shape
+- Front face: map profile photo as texture (TextureLoader)
+  → image path: src/assets/profile.jpg
+- Back face: dark gradient + name "Fujel Patel" + role "Web Developer"
+- Edges: glowing cyan border using EdgesGeometry + LineSegments
+- Frame depth: thin 3D border box around photo (BoxGeometry slightly larger)
+- Corner accents: small glowing cyan spheres at 4 corners
+
+Effects:
+- Holographic shimmer on front face using MeshPhongMaterial + envMap
+- Floating animation: gentle up-down via sin(time) in useFrame
+- Idle auto-rotate: slow Y-axis spin when user not interacting
+- On hover: glow intensifies (emissive boost)
+
+=== CONTROLS ===
+- OrbitControls from @react-three/drei
+  → enableZoom: true (scroll to zoom)
+  → enablePan: false
+  → autoRotate: true, autoRotateSpeed: 0.8
+  → autoRotate stops on mousedown/touchstart, resumes after 2s
+  → Touch: single finger drag = rotate (mobile swipe)
+  → Mouse: click + drag = rotate
+  → Full 360° horizontal + vertical rotation allowed
+
+=== LIGHTING ===
+- Ambient light intensity: 0.4
+- Point light cyan (#06b6d4) at [3, 3, 3] intensity: 1.5
+- Point light purple (#7c3aed) at [-3, -2, 2] intensity: 1
+- RectAreaLight in front for face illumination
+
+=== BACKGROUND ===
+- Canvas bg: #0d0d1a (same as reference site)
+- Animated particle dots (200 small white spheres, random positions)
+- Slow floating particle animation via useFrame
+
+=== SCENE SETUP ===
+File: src/components/Scene/ProfileModel3D.jsx
+
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { OrbitControls, useTexture } from '@react-three/drei'
+
+- Canvas style: width 100%, height 100vh
+- Camera: position [0, 0, 5], fov: 50
+- Suspense fallback: loading spinner
+- devicePixelRatio: Math.min(window.devicePixelRatio, 2)
+
+=== PROFILE TEXTURE ===
+Load image with useTexture hook:
+const texture = useTexture('/assets/profile.jpg')
+Apply to front MeshStandardMaterial: map={texture}
+Make sure image aspect ratio is preserved (portrait 9:16)
+
+=== PERFORMANCE ===
+- Only render this Canvas on Hero section (not whole page)
+- Dispose texture on unmount
+- Use gl.setPixelRatio capped at 2
+- Works on mobile without frame drops
+
+=== OUTPUT ===
+Generate complete file: src/components/Scene/ProfileModel3D.jsx
+Export as default component, ready to drop into Hero section.
+Usage: <ProfileModel3D imagePath="/assets/profile.jpg" />

@@ -1,0 +1,27 @@
+chunk-XVB3KHUR.js?v=bb14c055:18178 Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
+Check the render method of `PopChild`.
+    at ProjectCard (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.dev/src/components/ui/ProjectCard.tsx:20:31)
+    at PopChildMeasure (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…runner/workspace/node_modules/.vite/deps/framer-motion.js?v=bb14c055:63:23)
+    at PopChild (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…runner/workspace/node_modules/.vite/deps/framer-motion.js?v=bb14c055:84:21)
+    at PresenceChild (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…unner/workspace/node_modules/.vite/deps/framer-motion.js?v=bb14c055:122:24)
+    at AnimatePresence (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…unner/workspace/node_modules/.vite/deps/framer-motion.js?v=bb14c055:211:26)
+    at div
+    at div
+    at section
+    at MotionComponent (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…unner/workspace/node_modules/.vite/deps/framer-motion.js?v=bb14c055:946:40)
+    at Projects (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.dev/src/components/sections/Projects.tsx:38:41)
+    at main
+    at div
+    at div
+    at Home
+    at Route (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bb14c055:190:16)
+    at Switch (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=bb14c055:246:17)
+    at Suspense
+    at Router
+    at Provider (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…unner/workspace/node_modules/.vite/deps/chunk-XR3UTEM6.js?v=bb14c055:41:15)
+    at TooltipProvider (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…space/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=bb14c055:2249:5)
+    at QueryClientProvider (https://cf8c4c91-093e-48f1-9f8c-2161173c27b7-00-31gjkkd0ssi20.kirk.replit.d…rkspace/node_modules/.vite/deps/@tanstack_react-query.js?v=bb14c055:2747:3)
+    at App
+
+﻿

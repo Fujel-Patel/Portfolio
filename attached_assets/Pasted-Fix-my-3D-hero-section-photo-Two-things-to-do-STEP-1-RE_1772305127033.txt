@@ -1,0 +1,77 @@
+Fix my 3D hero section photo. Two things to do:
+
+=== STEP 1: REMOVE PHOTO BACKGROUND ===
+The profile image has a dark purple background that must be removed.
+
+Option A (Best) — Use remove.bg API or remove.bg website manually:
+- Go to remove.bg, upload profile.jpg, download PNG with transparent bg
+- Save as: src/assets/profile-nobg.png
+- This gives a clean cutout of just the person
+
+Option B — CSS trick inside Three.js:
+In MeshBasicMaterial add:
+  alphaTest={0.1}
+  transparent={true}
+Then in the texture:
+  texture.premultiplyAlpha = false
+This removes near-black pixels (works if bg is very dark)
+
+USE Option A result (profile-nobg.png) for best quality.
+
+=== STEP 2: MAKE PERSON LOOK 3D ===
+Display the transparent-bg photo as a 3D layered object:
+
+Create 3 planes stacked slightly apart (z-offset) for depth illusion:
+
+Layer 1 (back shadow): 
+- PlaneGeometry(2.9, 4.1)
+- MeshBasicMaterial color=#06b6d4, transparent, opacity=0.15
+- position z = -0.1
+- Creates cyan glow aura behind person
+
+Layer 2 (main photo):
+- PlaneGeometry(2.8, 4.0)  
+- MeshBasicMaterial map={texture}, transparent=true
+- position z = 0
+- The actual person cutout
+
+Layer 3 (front highlight):
+- PlaneGeometry(2.8, 4.0)
+- MeshBasicMaterial color=white, transparent, opacity=0.03
+- position z = 0.05
+- Subtle front shine
+
+Group all 3 in <group>:
+- Floating animation: position.y = sin(time * 0.8) * 0.1
+- OrbitControls: drag to rotate, autoRotate speed=0.4
+- On rotate, layers separate slightly = real 3D parallax depth feel
+
+=== STEP 3: ADD GLOW EFFECT ===
+Behind the person add a radial glow (not a box):
+- Use a CircleGeometry or custom shader
+- Color: cyan #06b6d4 with very low opacity (0.08)
+- Scale: (3, 4, 1) — oval shape matching body
+- position z = -0.3
+- This makes person look like they're glowing from behind
+
+=== STEP 4: WEBSITE BACKGROUND ===
+Canvas background = transparent (alpha: true in Canvas props)
+The dark #050510 website background shows through
+So person floats directly ON the site background with no box
+
+Canvas setup:
+<Canvas
+  gl={{ alpha: true, antialias: true }}
+  style={{ background: 'transparent' }}
+  camera={{ position: [0, 0, 5], fov: 45 }}
+>
+
+=== REMOVE COMPLETELY ===
+- No PlaneGeometry background box
+- No purple/dark rectangle behind person
+- No frames, no borders, no corner dots
+
+=== FINAL RESULT ===
+Person appears to float directly on the dark website background,
+slightly glowing cyan from behind, with 3D depth when rotated,
+transparent background so ONLY Fujel is visible.

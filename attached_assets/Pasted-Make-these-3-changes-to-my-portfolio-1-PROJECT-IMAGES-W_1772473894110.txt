@@ -1,0 +1,107 @@
+Make these 3 changes to my portfolio:
+
+=== 1. PROJECT IMAGES WITH CLICKABLE LINKS ===
+
+Project 1: Food Delivery App
+- Live Demo: https://meal-delta-ten.vercel.app/
+- GitHub: https://github.com/Fujel-Patel/Meal
+- Image: take a screenshot of https://meal-delta-ten.vercel.app/ 
+  OR use this placeholder for now:
+  <img src="https://api.microlink.io/?url=https://meal-delta-ten.vercel.app/&screenshot=true&meta=false&embed=screenshot.url" />
+- Clicking image opens live demo in new tab
+
+Project 2: Real-Time Chat Application  
+- Live Demo: https://chat-web-application-eqt3.vercel.app/login
+- GitHub: https://github.com/Fujel-Patel/Chat-WebApplication
+- Image: use microlink screenshot:
+  <img src="https://api.microlink.io/?url=https://chat-web-application-eqt3.vercel.app/login&screenshot=true&meta=false&embed=screenshot.url" />
+- Clicking image opens live demo in new tab
+
+Project card structure:
+- Top: project screenshot image (clickable → live demo)
+- Image height: 200px, object-fit: cover, border-radius top
+- Overlay on image hover: dark overlay + "View Live" text centered
+- Bottom: project title, description, tech tags
+- Two buttons: "Live Demo" + "GitHub" → both open new tab
+- Card hover: translateY(-8px) + cyan glow shadow
+
+=== 2. DRAWER TRANSITION ANIMATION ===
+Install: npm install framer-motion
+
+Replace current page transitions with DRAWER effect:
+When navigating from one section to another, animate like 
+a drawer sliding open from bottom or side.
+
+Use this approach with Framer Motion:
+
+const drawerVariants = {
+  hidden: { 
+    clipPath: "inset(0 0 100% 0)",
+    transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] }
+  },
+  visible: { 
+    clipPath: "inset(0 0 0% 0)",
+    transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] }
+  },
+  exit: {
+    clipPath: "inset(100% 0 0% 0)",
+    transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] }
+  }
+}
+
+Wrap each section with:
+<motion.section
+  variants={drawerVariants}
+  initial="hidden"
+  whileInView="visible"
+  exit="exit"
+  viewport={{ once: false, amount: 0.1 }}
+>
+
+Also add a CURTAIN OVERLAY effect on nav click:
+- When nav link clicked, a dark curtain div slides DOWN 
+  then slides UP revealing new section
+- Curtain color: #050510 (site background)
+- Duration: 0.5s down + 0.5s up
+- This gives premium "page wipe" feel
+
+Curtain implementation:
+const [curtain, setCurtain] = useState(false)
+
+On nav click:
+1. setCurtain(true) → curtain slides down (0.5s)
+2. After 0.5s → scroll to section
+3. After 0.8s → curtain slides up and disappears
+
+CSS for curtain:
+.curtain {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #050510;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.curtain.active {
+  transform: translateY(0%);
+}
+
+=== 3. SCROLL ANIMATIONS FOR ALL SECTIONS ===
+Every section element animates on scroll into view:
+- About section: slide in from left
+- Skills: fade up one by one (stagger 0.1s each)
+- Project cards: fade up with stagger 0.15s
+- Contact: slide in from right
+
+Use Framer Motion whileInView:
+initial={{ opacity: 0, y: 40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.5, delay: index * 0.15 }}
+viewport={{ once: true }}
+
+=== DO NOT CHANGE ===
+- 3D hero model
+- Color theme
+- Project data/links
+- Existing layout structure

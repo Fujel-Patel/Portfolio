@@ -1,0 +1,82 @@
+Build a 3D portfolio website for Fujel Patel using React + Vite + Three.js (React Three Fiber).
+
+=== DEVELOPER INFO (hardcode this data) ===
+Name: Fujel Patel
+Role: Web Developer
+Email: patelfujel5@gmail.com
+Phone: +91 9054142262
+Location: Bharuch, Gujarat, India
+LinkedIn: [your LinkedIn URL]
+GitHub: [your GitHub URL]
+
+Summary: "Passionate web developer turning ideas into fast, responsive 
+web apps using React and the MERN stack."
+
+Skills:
+- Languages: JavaScript, TypeScript
+- Frontend: HTML5, CSS3, React.js, Tailwind CSS, Redux/Context API
+- Backend: Node.js, Express.js, RESTful APIs
+- Database: MongoDB, MySQL
+- Tools: Git, GitHub, Socket.IO, JWT
+
+Projects:
+1. Food Delivery App
+   - React Hooks + Redux state management
+   - 25% improved page load speed
+   - Tailwind CSS mobile-first UI
+
+2. Real-Time Chat Application
+   - Socket.IO real-time messaging
+   - JWT authentication + protected routes
+   - React Hooks optimized state management
+
+Education:
+- MCA — Sigma University, Vadodara (2025–2027)
+- B.Sc. Chemistry — VNSGU (2020–2023)
+- Diploma in Computer Eng — GTU (2022–2025)
+
+=== PROFILE IMAGE ===
+- Import profile photo from: src/assets/images/profile.jpg
+  (User will upload their photo manually to this path)
+- Use it in: Hero section (circular frame with cyan glow border)
+- Also use in: About section with 3D floating card effect
+- Apply CSS: border-radius: 50%, box-shadow: 0 0 30px cyan
+
+=== TECH STACK (Replit-optimized) ===
+- React 18 + Vite
+- React Three Fiber + Drei
+- Framer Motion
+- Tailwind CSS (dark theme default)
+- Zustand (state management)
+- NO heavy GLTF models — use procedural Three.js geometry only
+
+=== SECTIONS ===
+1. Hero — Name, role, profile photo (circular, glowing), animated tagline
+2. About — Skills listed with animated progress bars, floating 3D orbs
+3. Projects — 3D floating cards for each project, click to expand
+4. Contact — Email/phone/social links with form
+
+=== REPLIT-SPECIFIC REQUIREMENTS ===
+- Keep bundle size under 5MB (no GLTF assets)
+- Use InstancedMesh for any repeated 3D objects
+- Lazy load sections
+- Canvas fallback message for unsupported browsers
+- All assets via import or CDN (no local large files)
+
+=== COLOR THEME ===
+Background: #0a0a0a
+Primary: cyan (#06b6d4)
+Accent: purple (#7c3aed)
+Text: white/gray
+
+=== FOLDER STRUCTURE ===
+src/
+├── components/Scene/  (MainScene, Lighting)
+├── components/UI/     (Hero, About, Projects, Contact, Navbar)
+├── components/Models/ (SkillSpheres, ProjectCards - procedural only)
+├── assets/images/     (profile.jpg — user uploads manually)
+├── data/              (skills.js, projects.js — use above data)
+├── store/             (usePortfolioStore.js with Zustand)
+└── utils/             (animations.js, helpers.js)
+
+Generate all files. Start with App.jsx and main scene setup.

@@ -1,0 +1,373 @@
+node --version  # Should be >= 18.0.0
+npm --version   # Should be >= 9.0.0
+```
+
+Agar purana version hai toh update karo: https://nodejs.org/
+
+---
+
+## 🎯 PHASE-WISE COPILOT PROMPTS
+
+### 🟢 PHASE 1: Initial Setup (Day 1)
+
+#### Prompt 1: Project Initialization
+```
+Create a new React + Vite project with the following setup:
+
+Project name: 3d-portfolio
+Framework: React 18 with JavaScript
+Include: ESLint configuration
+
+Then install these exact packages:
+- three@^0.160.0
+- @react-three/fiber@^8.15.0
+- @react-three/drei@^9.88.0
+- zustand@^4.5.0
+- react-router-dom@^6.22.0
+- framer-motion@^11.0.0
+- tailwindcss@^3.4.0
+- leva@^0.9.35
+
+Also initialize Tailwind CSS with dark theme as default.
+
+Create this folder structure:
+src/
+ ├── components/
+ │    ├── Scene/
+ │    ├── Models/
+ │    ├── UI/
+ │    └── Common/
+ ├── store/
+ ├── pages/
+ ├── assets/
+ │    ├── models/
+ │    └── textures/
+ └── utils/
+
+Generate the complete package.json with all scripts.
+```
+
+---
+
+#### Prompt 2: Tailwind Configuration
+```
+Configure Tailwind CSS for a dark-themed 3D portfolio:
+
+Requirements:
+- Dark theme as default
+- Custom colors: cyan, purple, dark grays
+- Custom animations for fade-in, slide-up
+- Support for backdrop-blur
+- Responsive breakpoints
+- Custom font family (Inter or Poppins from Google Fonts)
+
+Create tailwind.config.js and update index.css with base styles.
+Also add @layer utilities for common 3D UI patterns.
+```
+
+---
+
+### 🟡 PHASE 2: Core 3D Scene (Day 2-3)
+
+#### Prompt 3: Basic Scene Setup
+```
+Create a basic Three.js scene using React Three Fiber:
+
+File: src/components/Scene/MainScene.jsx
+
+Requirements:
+- Canvas with dark background (#0a0a0a)
+- Perspective camera at position [0, 2, 5]
+- Ambient light (intensity 0.5)
+- Directional light at [5, 5, 5] (intensity 1)
+- OrbitControls with damping
+- A simple rotating cube as placeholder
+- 60 FPS performance
+- Responsive to window resize
+
+Also create:
+- src/components/Scene/Lighting.jsx (separate lighting component)
+- src/components/Scene/Camera.jsx (camera controller)
+
+Make it production-ready with proper prop types.
+```
+
+---
+
+#### Prompt 4: Store Setup
+```
+Create a Zustand store for portfolio state management:
+
+File: src/store/usePortfolioStore.js
+
+State to manage:
+- activeSection: 'home' | 'about' | 'projects' | 'contact'
+- isLoading: boolean
+- selectedProject: null | projectId
+- cameraPosition: [x, y, z]
+- isMobile: boolean
+
+Actions:
+- setActiveSection(section)
+- setSelectedProject(id)
+- setCameraPosition(position)
+- toggleLoading()
+- checkMobile()
+
+Include TypeScript-style JSDoc comments.
+Use proper Zustand patterns with immer if needed.
+```
+
+---
+
+#### Prompt 5: UI Overlay Structure
+```
+Create a responsive UI overlay system:
+
+File: src/components/UI/Overlay.jsx
+
+Components needed:
+- Header (name, navigation)
+- Hero text overlay
+- Section indicators (dots on right side)
+- Footer (social links)
+
+Requirements:
+- Absolute positioning over 3D canvas
+- pointer-events-none on container
+- pointer-events-auto on interactive elements
+- Framer Motion animations for entrance
+- Mobile responsive
+- Keyboard accessible navigation
+- Use Tailwind classes
+
+Create separate files for:
+- Header.jsx
+- Navigation.jsx
+- SectionIndicator.jsx
+- Footer.jsx
+```
+
+---
+
+### 🔵 PHASE 3: 3D Models & Interactions (Day 4-5)
+
+#### Prompt 6: Model Loader Component
+```
+Create a reusable GLTF model loader:
+
+File: src/components/Models/ModelLoader.jsx
+
+Features:
+- Use useGLTF from drei
+- Loading state with Suspense fallback
+- Error boundary
+- Scale, position, rotation props
+- Draco compression support
+- Optimize materials on load
+- Cast/receive shadows
+
+Also create:
+- src/components/Common/Loader3D.jsx (3D loading spinner)
+- src/utils/modelOptimizer.js (helper functions)
+
+Handle edge cases: missing models, slow connections.
+```
+
+---
+
+#### Prompt 7: Interactive Skill Spheres
+```
+Create floating skill spheres scene:
+
+File: src/components/Models/SkillSpheres.jsx
+
+Requirements:
+- 6-8 spheres representing skills (React, Node, Three.js, etc.)
+- Gentle floating animation
+- Hover effect: scale up + glow
+- Click to show skill details
+- Use InstancedMesh for performance
+- Sphere colors based on skill category
+- Smooth camera transition on click
+
+Create companion file:
+- src/data/skills.js (skill data with names, colors, descriptions)
+
+Use useFrame for animations.
+Performance: maintain 60 FPS even on mobile.
+```
+
+---
+
+#### Prompt 8: Project Showcase Section
+```
+Create 3D project cards/panels:
+
+File: src/components/Models/ProjectPanels.jsx
+
+Features:
+- 3-4 floating panels in 3D space
+- Each shows project thumbnail + title
+- Click to open detailed modal
+- Smooth animation on mount
+- Cards arrange in arc/circle
+- Hover: lift up + illuminate
+- Mobile: swipeable
+
+Additional files:
+- src/components/UI/ProjectModal.jsx (2D modal overlay)
+- src/data/projects.js (project data)
+
+Use Drei's <Html> for text on 3D objects.
+Implement raycasting for click detection.
+```
+
+---
+
+### 🟣 PHASE 4: Advanced Features (Day 6-7)
+
+#### Prompt 9: Camera Animation System
+```
+Create smooth camera transition system:
+
+File: src/components/Scene/CameraController.jsx
+
+Features:
+- Smooth transitions between sections
+- Easing functions (easeInOutCubic)
+- Look-at target animation
+- Scroll-based camera movement (optional)
+- Keyboard navigation (Arrow keys, WASD)
+- Restore to home position
+
+Use:
+- useFrame for animation loop
+- Zustand store for target positions
+- THREE.Vector3.lerp() for smoothing
+
+Create:
+- src/utils/cameraAnimations.js (preset camera positions)
+```
+
+---
+
+#### Prompt 10: Performance Optimization
+```
+Optimize the entire 3D scene:
+
+Tasks:
+1. Add <Perf /> component from drei (dev only)
+2. Implement LOD (Level of Detail) for complex models
+3. Use texture compression
+4. Frustum culling
+5. Lazy load models outside viewport
+6. Reduce shadow map size
+7. Use InstancedMesh where possible
+8. Add loading manager
+
+Create:
+- src/utils/performanceMonitor.js
+- Update MainScene.jsx with optimizations
+
+Target: Lighthouse score > 90, FPS > 60
+```
+
+---
+
+#### Prompt 11: Responsive & Accessibility
+```
+Make the portfolio fully responsive and accessible:
+
+Requirements:
+1. Mobile: simplified 3D, touch controls
+2. Tablet: medium quality
+3. Desktop: full quality
+
+Accessibility:
+- ARIA labels on all interactive elements
+- Skip navigation link
+- Keyboard focus indicators
+- Reduced motion support (@media prefers-reduced-motion)
+- Screen reader announcements for section changes
+
+Create:
+- src/hooks/useMediaQuery.js
+- src/hooks/useReducedMotion.js
+- Update all components with ARIA attributes
+
+Test with Lighthouse, WAVE, keyboard only.
+```
+
+---
+
+### 🚀 PHASE 5: Final Polish (Day 8)
+
+#### Prompt 12: Deployment Setup
+```
+Prepare for production deployment:
+
+Tasks:
+1. Create vercel.json config
+2. Update vite.config.js for production
+3. Add environment variables support
+4. Create .env.example
+5. Optimize build size (code splitting, tree shaking)
+6. Add meta tags for SEO
+7. Create 404 page
+8. Add Google Analytics (optional)
+9. Generate sitemap
+
+Files to create:
+- vercel.json
+- .env.example
+- public/robots.txt
+- public/sitemap.xml
+
+Run build test: npm run build && npm run preview
+```
+
+---
+
+## 🎨 BONUS FEATURES (Optional)
+
+#### Prompt 13: Easter Eggs
+```
+Add fun interactions:
+
+1. Konami code → show hidden scene
+2. Double-click background → change theme
+3. Type "debug" → show stats panel
+4. Hover on name → animated text effect
+
+Keep performance intact.
+```
+
+---
+
+## 📝 TESTING CHECKLIST
+
+Copy-paste this to Copilot after main implementation:
+```
+Create tests for the portfolio:
+
+1. Component tests (React Testing Library):
+   - UI components render correctly
+   - Store state changes work
+   - Navigation functions properly
+
+2. E2E tests (Playwright):
+   - Page loads within 3 seconds
+   - Canvas renders
+   - All sections are navigable
+   - Mobile responsive
+
+3. Performance tests:
+   - Lighthouse CI
+   - FPS monitoring
+   - Memory usage check
+
+Create:
+- tests/unit/
+- tests/e2e/
+- .github/workflows/ci.ym
